@@ -2,9 +2,7 @@
 
 [TOC]
 
-## Introduction
-When is the last time you so frustrated because you can't find why your service become really slow. Probaly never if you just graduated or doesn't really care about your company service. But you should or will learn more about it now. We will talk more about [datadog](https://www.datadoghq.com), not about what is datadog but how we will use it to make our life easier.
-
+## IntroductionWhen is the last time you so frustrated because you can't find why your service become really slow. Probaly never if you just graduated or doesn't really care about your company service. But you should or will learn more about it now. We will talk more about [datadog](https://www.datadoghq.com), not about what is datadog but how we will use it to make our life easier.
 ## Example
 
 We will see some example of monitor that datadog can track.
@@ -169,5 +167,7 @@ And here we go your metrics is available now.
 
 But hey we're not using the tags yet. Let's see why I'm encouraging the use of tags to make our life easier. We will using the cache hit rate example.
 
-<video src="./resources/datadog-cache-example.webm"></video>
+![datadog-cache](./resources/datadog-cache.gif)
+
 Above graph, using display `bars` dan we group it by `cache` tags. The graph will group it automatically from what we send, in this case `cache:hit` and `cache:miss`. 
+

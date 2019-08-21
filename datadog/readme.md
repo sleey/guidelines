@@ -1,8 +1,24 @@
 # Datadog Guidelines
 
-[TOC]
+   * [Datadog Guidelines](#datadog-guidelines)
+      * [Introduction](#introduction)
+      * [Example](#example)
+         * [Latency and Request Per Second](#latency-and-request-per-second)
+         * [Cache Hit Rate](#cache-hit-rate)
+         * [Distribution](#distribution)
+      * [The Code](#the-code)
+         * [Creating Datadog Client](#creating-datadog-client)
+         * [Sending Metrics](#sending-metrics)
+            * [Histogram](#histogram)
+            * [Count](#count)
+      * [Best Practice](#best-practice)
+         * [Metrics Name](#metrics-name)
+      * [Monitoring](#monitoring)
 
-## IntroductionWhen is the last time you so frustrated because you can't find why your service become really slow. Probaly never if you just graduated or doesn't really care about your company service. But you should or will learn more about it now. We will talk more about [datadog](https://www.datadoghq.com), not about what is datadog but how we will use it to make our life easier.
+## Introduction
+
+When is the last time you so frustrated because you can't find why your service become really slow. Probably never if you just graduated or doesn't really care about your company service. But you should or will learn more about it now. We will talk more about [datadog](https://www.datadoghq.com), not about what is datadog but how we will use it to make our life easier.
+
 ## Example
 
 We will see some example of monitor that datadog can track.

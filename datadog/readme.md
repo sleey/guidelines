@@ -94,7 +94,7 @@ start := time.Now()
 doSomethingHere()
 
 // Histogram(name string, value float64, tags []string, rate float64)
-client.Histogram("metric.name", time.Since(start).Seconds(), []string{""}, 1)
+client.Histogram("metric.name", time.Since(start).Seconds(), []string{}, 1)
 ```
 
 Let's say our `doSomethingHere()` function run for 2 seconds. With the above example, we send a metric with name `metric.name`, value `2.0`, empty tags, and rate 1. After that, we can create latency and RPS monitor. 

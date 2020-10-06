@@ -28,7 +28,7 @@ We will see some example of monitor that Datadog can track.
 
 ![Latency of something](./resources/1566269967362.png)
 
-Above image called Time Series Graph, the blue line represents max latency, and the purple line represents 95 percentiles of latency in 1 hour. If you are wondering why we don't use average, that's out of the scope of this guideline, but you can read it more in [here](https://www.elastic.co/blog/averages-can-dangerous-use-percentile) and [here](https://www.dynatrace.com/news/blog/why-averages-suck-and-percentiles-are-great/). We can see from that graph that service has 150 ms as max latency and below 50 ms for 95 percentiles. The number on the right side is **Request Per Second** (RPS). If you notice, we set the time window 15 minutes for RPS. It's because we want to get the current RPS using the average.
+Above image is called Time Series Graph, the blue line represents max latency, and the purple line represents 95 percentiles of latency in 1 hour. If you are wondering why we don't use average, that's out of the scope of this guideline, but you can read it more in [here](https://www.elastic.co/blog/averages-can-dangerous-use-percentile) and [here](https://www.dynatrace.com/news/blog/why-averages-suck-and-percentiles-are-great/). We can see from that graph that service has 150 ms as max latency and below 50 ms for 95 percentiles. The number on the right side is **Request Per Second** (RPS). If you notice, we set the time window 15 minutes for RPS. It's because we want to get the current RPS using the average.
 
 ### Cache Hit Rate
 
@@ -94,7 +94,7 @@ start := time.Now()
 doSomethingHere()
 
 // Histogram(name string, value float64, tags []string, rate float64)
-client.Histogram("metric.name", time.Since(start).Seconds(), []string{""}, 1)
+client.Histogram("metric.name", time.Since(start).Seconds(), []string{}, 1)
 ```
 
 Let's say our `doSomethingHere()` function run for 2 seconds. With the above example, we send a metric with name `metric.name`, value `2.0`, empty tags, and rate 1. After that, we can create latency and RPS monitor. 
@@ -123,7 +123,7 @@ func getData(key string) (result string) {
 client.Count("metric.name", 1, []string{"cache:"+cacheStatus}, 1)
 ```
 
-Oh hey we just create a simple cache with monitoring :smiley:. If the cache exist set the `cacheStatus` to `hit` otherwise set it as a `miss`. After that we can create cache hit rate monitor. For distribution monitor, we can create it using `Count` function. As example, we can put `distribution` tags with several values e.g., `distribution:1`, `distribution:2`, `distribution:3`, etc.
+Oh hey we just create a simple cache with monitoring :smiley:. If the cache exist, set the `cacheStatus` to `hit` otherwise set it as a `miss`. After that we can create cache hit rate monitor. For distribution monitor, we can create it using `Count` function. As example, we can put `distribution` tags with several values e.g., `distribution:1`, `distribution:2`, `distribution:3`, etc.
 
 ## Best Practice
 
@@ -135,7 +135,7 @@ Tags value will become lowercase, so don't bother to use camelCase in tags
 
 ### Metrics Name
 
-Don't create a new metrics name for each of your function. I believe you have a lot of functions, use tags for that. Let's say we have some functions that call to several databases to construct user data.
+Don't create a new metrics name for each of your function. I believe you have a lot of functions, use tags for them. Let's say we have some functions that call to several databases to construct user data.
 
 ```go
 func getOne() {
@@ -155,9 +155,9 @@ servicename.module.process
 
 Service name is already set as a prefix when we create our client, so we don't need to put that anymore.
 
-Module is what are we going to monitor. For the above example, we want to track user data process.
+Module is what we we going to monitor. For the above example, we want to track user data process.
 
-Process is what are we doing in the process. For the above example, we get the data from databases, so we put database as a process. If you are getting the data from API, you can change it to api or the API name.
+Process is what we are doing in the process. For the above example, we get the data from databases, so we put database as a process. If you are getting the data from API, you can change it to api or the API name.
 
 Let's say the process is not that simple, and there is subprocess. Let's add the cache example to our user data process, we can add it like this.
 
@@ -167,11 +167,11 @@ client.Histogram("userdata.database.cache", 1, []string{"cache:hit"}, 1)
 
 ### What To Monitor
 
-We should monitor all functions that calling external data source, e.g., database, Redis, Elasticsearch, API, etc. We don't need to monitor simple function that is only calculating or checking statements.
+We should monitor all functions that are calling external data source, e.g., database, Redis, Elasticsearch, API, etc. We don't need to monitor simple function that is only calculating or checking statements.
 
 ## Monitoring
 
-Yay! We learn to send metrics to Datadog, but it's useless if we aren't monitoring it. I assume you already have account and access to Datadog. Go to the [dashboard list page](https://app.datadoghq.com/dashboard/lists) and create a new dashboard. There will be a pop up to pick our board type. I prefer Screenboard because I can customize a lot of things here, but you can choose whichever you want. If your team already has a dashboard, you can search it in the dashboard list and just and the metrics on that dashboard.
+Yay! We learn to send metrics to Datadog, but it's useless if we aren't monitoring it. I assume you have already had account and access to Datadog. Go to the [dashboard list page](https://app.datadoghq.com/dashboard/lists) and create a new dashboard. There will be a pop up to pick our board type. I prefer Screenboard because I can customize a lot of things here, but you can choose whichever you want. If your team already has a dashboard, you can search it in the dashboard list and just and the metrics on that dashboard.
 
 ![1566354382753](./resources/1566354382753.png)
 
@@ -187,7 +187,7 @@ And here we go your metrics is available now.
 
 ![1566358986037](./resources/1566358986037.png)
 
-But hey we're not using the tags yet. Let's see why I'm encouraging the use of tags to make our life easier. We will be using the cache hit rate example.
+But hey we have not used the tags yet. Let's see why I'm encouraging the use of tags to make our life easier. We will be using the cache hit rate example.
 
 ![datadog-cache](./resources/datadog-cache.gif)
 
